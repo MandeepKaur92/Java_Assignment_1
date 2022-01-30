@@ -49,10 +49,11 @@ public class LoginServlet extends HttpServlet {
 	   
 	  
 	    // check validation of password means enter password by user is correct or not 
-	    if(p.equals("s")){  
+	    if(p.equals("s") && n.equals("mandeep")){  
 	    	Cookie ck=new Cookie("uname",n);//creating cookie object  
 	 	    response.addCookie(ck);//adding cookie in the response   
 	 	    out.print(ck.getValue());
+	 	     
 	        RequestDispatcher rd=request.getRequestDispatcher("UserServlet");  
 	        rd.forward(request, response);  
 	        

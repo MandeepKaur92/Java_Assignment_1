@@ -43,13 +43,15 @@ public class UserServlet extends HttpServlet {
 	    //String n=request.getParameter("username");  
 	    //String p=request.getParameter("userpass");
 	     
-		response.setContentType("text/html");  
+		 response.setContentType("text/html;charset=UTF-8"); 
 	    PrintWriter out = response.getWriter();  
 	    Cookie[] ck=request.getCookies();
 	    out.print("Welcome "+ck[1].getValue());  
+	   
 	    RequestDispatcher rd=request.getRequestDispatcher("/Marks.html");  
         rd.include(request, response);  
-		out.close();
+        out.close();
+		
 	      
 	            
 	}
