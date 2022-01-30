@@ -10,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class LoginServlet
@@ -34,6 +35,7 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+
 	}
 
 	/**
@@ -43,31 +45,39 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
+		try {
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
 
-		String n = request.getParameter("username");
-		String p = request.getParameter("userpass");
-		out.print("Hello!  " + n + "  ");
+			String n = request.getParameter("username");
+			String p = request.getParameter("userpass");
+			out.print("Hello!  " + n + "  ");
 
-		// check validation of password means enter password by user is correct or not
-		if (p.equals("s") && n.equals("mandeep")) {
-			Cookie ck = new Cookie("uname", n);// creating cookie object
-			response.addCookie(ck);// adding cookie in the response
-			out.print(ck.getValue());
+			HttpSession session = request.getSession();
+			session.setAttribute("uname", n);
 
-			RequestDispatcher rd = request.getRequestDispatcher("UserServlet");
-			rd.forward(request, response);
+			// check validation of password means enter password by user is correct or not
+			if (p.equals("s") && n.equals("mandeep")) {
+				Cookie ck = new Cookie("uname", n);// creating cookie object
+				response.addCookie(ck);// adding cookie in the response
+				out.print(ck.getValue());
 
-		} else {
+				RequestDispatcher rd = request.getRequestDispatcher("UserServlet");
+				rd.forward(request, response);
 
-			out.print("Sorry UserName or Password Error!"); // if password is not correct then this message show
-			RequestDispatcher rd = request.getRequestDispatcher("/login.jsp"); // here request is send for page
-																				// login.jsp
-			rd.include(request, response); // here the content of a resource is include in the response.
+			} else {
 
+				out.print("Sorry UserName or Password Error!"); // if password is not correct then this message show
+				RequestDispatcher rd = request.getRequestDispatcher("/login.jsp"); // here request is send for page
+																					// login.jsp
+				rd.include(request, response); // here the content of a resource is include in the response.
+
+			}
+
+			out.close();
+		} catch (Exception e) {
+			System.out.println(e);
 		}
-		out.close();
 	}
 
 }

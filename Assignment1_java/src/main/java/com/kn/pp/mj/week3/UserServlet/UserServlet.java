@@ -10,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class UserServlet
@@ -34,6 +35,20 @@ public class UserServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		try {
+
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
+
+			HttpSession session = request.getSession(false);
+			String n = (String) session.getAttribute("uname");
+			out.print("Hello " + n);
+
+			out.close();
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 
 	/**
@@ -43,18 +58,24 @@ public class UserServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// String n=request.getParameter("username");
-		// String p=request.getParameter("userpass");
+		try {
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
 
-		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		Cookie[] ck = request.getCookies();
-		out.print("Welcome " + ck[1].getValue());
+			HttpSession session = request.getSession(false);
+			String n = (String) session.getAttribute("uname");
+			out.print(" Hello " + n + " !");
 
-		RequestDispatcher rd = request.getRequestDispatcher("/Marks.html");
-		rd.include(request, response);
-		out.close();
+			Cookie[] ck = request.getCookies();
+			out.print("      Welcome " + ck[1].getValue() + " in this page");
 
+			RequestDispatcher rd = request.getRequestDispatcher("/Marks.html");
+			rd.include(request, response);
+			out.close();
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 
 }
