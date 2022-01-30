@@ -1,4 +1,4 @@
-package com.kn.pp.mj.week3.assignment1;
+package com.kn.pp.mj.week3.UserServlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,16 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class UserServlet
  */
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/UserServlet")
+public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public UserServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,33 +39,19 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+	          
+	    //String n=request.getParameter("username");  
+	    //String p=request.getParameter("userpass");
+	     
 		response.setContentType("text/html");  
 	    PrintWriter out = response.getWriter();  
-	          
-	    String n=request.getParameter("username");  
-	    String p=request.getParameter("userpass"); 
-	    out.print("Hello!  "+n+"  ");
-	    
-	   
-	  
-	    // check validation of password means enter password by user is correct or not 
-	    if(p.equals("s")){  
-	    	Cookie ck=new Cookie("uname",n);//creating cookie object  
-	 	    response.addCookie(ck);//adding cookie in the response   
-	 	    out.print(ck.getValue());
-	        RequestDispatcher rd=request.getRequestDispatcher("UserServlet");  
-	        rd.forward(request, response);  
-	        
-      }  
-	    else{  
-	    	
-	        out.print("Sorry UserName or Password Error!");  //if password is not correct then this message show
-	        RequestDispatcher rd=request.getRequestDispatcher("/login.jsp");  //  here request is send for page login.jsp
-	        rd.include(request, response);  //here the content of a resource is include in the response.
-	                      
-	        }  
-	    out.close();
+	    Cookie[] ck=request.getCookies();
+	    out.print("Welcome "+ck[1].getValue());  
+	    RequestDispatcher rd=request.getRequestDispatcher("/Marks.html");  
+        rd.include(request, response);  
+		out.close();
+	      
+	            
 	}
-	
 
 }
