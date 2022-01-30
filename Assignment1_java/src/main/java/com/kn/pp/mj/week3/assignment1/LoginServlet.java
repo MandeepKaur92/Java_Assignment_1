@@ -17,56 +17,57 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LoginServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public LoginServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		response.setContentType("text/html");  
-	    PrintWriter out = response.getWriter();  
-	          
-	    String n=request.getParameter("username");  
-	    String p=request.getParameter("userpass"); 
-	    out.print("Hello!  "+n+"  ");
-	    
-	   
-	  
-	    // check validation of password means enter password by user is correct or not 
-	    if(p.equals("s") && n.equals("mandeep")){  
-	    	Cookie ck=new Cookie("uname",n);//creating cookie object  
-	 	    response.addCookie(ck);//adding cookie in the response   
-	 	    out.print(ck.getValue());
-	 	     
-	        RequestDispatcher rd=request.getRequestDispatcher("UserServlet");  
-	        rd.forward(request, response);  
-	        
-      }  
-	    else{  
-	    	
-	        out.print("Sorry UserName or Password Error!");  //if password is not correct then this message show
-	        RequestDispatcher rd=request.getRequestDispatcher("/login.jsp");  //  here request is send for page login.jsp
-	        rd.include(request, response);  //here the content of a resource is include in the response.
-	                      
-	        }  
-	    out.close();
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+
+		String n = request.getParameter("username");
+		String p = request.getParameter("userpass");
+		out.print("Hello!  " + n + "  ");
+
+		// check validation of password means enter password by user is correct or not
+		if (p.equals("s") && n.equals("mandeep")) {
+			Cookie ck = new Cookie("uname", n);// creating cookie object
+			response.addCookie(ck);// adding cookie in the response
+			out.print(ck.getValue());
+
+			RequestDispatcher rd = request.getRequestDispatcher("UserServlet");
+			rd.forward(request, response);
+
+		} else {
+
+			out.print("Sorry UserName or Password Error!"); // if password is not correct then this message show
+			RequestDispatcher rd = request.getRequestDispatcher("/login.jsp"); // here request is send for page
+																				// login.jsp
+			rd.include(request, response); // here the content of a resource is include in the response.
+
+		}
+		out.close();
 	}
-	
 
 }
